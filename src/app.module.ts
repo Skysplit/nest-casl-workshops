@@ -1,9 +1,11 @@
-import { AppController } from '@app/app.controller';
-import { AppService } from '@app/app.service';
 import { DatabaseModule } from '@app/database/database.module';
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
+import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
+import { CommentModule } from './comment/comment.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -11,10 +13,13 @@ import { APP_PIPE } from '@nestjs/core';
       envFilePath: [`.env.${process.env.NODE_ENV ?? 'production'}`, '.env'],
     }),
     DatabaseModule,
+    UserModule,
+    PostModule,
+    CommentModule,
+    AuthModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
-    AppService,
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({ transform: true }),
